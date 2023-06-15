@@ -1,0 +1,29 @@
+{
+  "configurations" : [
+    {
+      "id" : "ABE302C7-4E78-4270-ACFB-22A434E90D41",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:ImageSearch.xcodeproj",
+      "identifier" : "AF1B5DA32A3A5C55009BB34B",
+      "name" : "ImageSearch"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Features",
+        "identifier" : "ModelsTests",
+        "name" : "ModelsTests"
+      }
+    }
+  ],
+  "version" : 1
+}

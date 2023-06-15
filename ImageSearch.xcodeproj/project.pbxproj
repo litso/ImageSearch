@@ -11,6 +11,7 @@
 		AF1B5DAA2A3A5C55009BB34B /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1B5DA92A3A5C55009BB34B /* AppView.swift */; };
 		AF1B5DAC2A3A5C56009BB34B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF1B5DAB2A3A5C56009BB34B /* Assets.xcassets */; };
 		AF1B5DAF2A3A5C56009BB34B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF1B5DAE2A3A5C56009BB34B /* Preview Assets.xcassets */; };
+		AF210E602A3A950A001F5A59 /* SearchResultsFeature in Frameworks */ = {isa = PBXBuildFile; productRef = AF210E5F2A3A950A001F5A59 /* SearchResultsFeature */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +21,7 @@
 		AF1B5DAB2A3A5C56009BB34B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AF1B5DAE2A3A5C56009BB34B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		AF1B5DB52A3A6CA6009BB34B /* Features */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Features; sourceTree = "<group>"; };
+		AF210E612A3A9743001F5A59 /* ImageSearch.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = ImageSearch.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,6 +29,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF210E602A3A950A001F5A59 /* SearchResultsFeature in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -36,9 +39,11 @@
 		AF1B5D9B2A3A5C55009BB34B = {
 			isa = PBXGroup;
 			children = (
+				AF210E612A3A9743001F5A59 /* ImageSearch.xctestplan */,
 				AF1B5DB52A3A6CA6009BB34B /* Features */,
 				AF1B5DA62A3A5C55009BB34B /* ImageSearch */,
 				AF1B5DA52A3A5C55009BB34B /* Products */,
+				AF210E5E2A3A950A001F5A59 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -69,6 +74,13 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		AF210E5E2A3A950A001F5A59 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -85,6 +97,9 @@
 			dependencies = (
 			);
 			name = ImageSearch;
+			packageProductDependencies = (
+				AF210E5F2A3A950A001F5A59 /* SearchResultsFeature */,
+			);
 			productName = ImageSearch;
 			productReference = AF1B5DA42A3A5C55009BB34B /* ImageSearch.app */;
 			productType = "com.apple.product-type.application";
@@ -341,6 +356,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AF210E5F2A3A950A001F5A59 /* SearchResultsFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SearchResultsFeature;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AF1B5D9C2A3A5C55009BB34B /* Project object */;
 }
