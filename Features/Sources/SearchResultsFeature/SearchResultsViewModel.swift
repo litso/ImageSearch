@@ -36,6 +36,8 @@ public class SearchResultsViewModel: ObservableObject {
 
     @Published var allMedia = [Media]()
     @Published var alert: AlertMessage?
+    @Published var fullScreenImage: Media?
+
     var page = 0
     private var cancellable: AnyCancellable?
     private let imgurClient: ImgurClient

@@ -8,6 +8,10 @@ let package = Package(
     platforms: [.iOS(.v16)],
     products: [
         .library(
+            name: "ExamineImageFeature",
+            targets: ["ExamineImageFeature"]
+        ),
+        .library(
             name: "ImgurClient",
             targets: ["ImgurClient"]),
         .library(
@@ -22,6 +26,10 @@ let package = Package(
             name: "Secrets",
             targets: ["Secrets"]),
         .library(
+            name: "SharedViews",
+            targets: ["SharedViews"]
+        ),
+        .library(
             name: "SearchResultsFeature",
             targets: ["SearchResultsFeature"]
         ),
@@ -32,6 +40,13 @@ let package = Package(
         .package(url: "https://github.com/onevcat/Kingfisher.git", .upToNextMajor(from: "7.8.0"))
     ],
     targets: [
+        .target(
+            name: "ExamineImageFeature",
+            dependencies: [
+                "Kingfisher",
+                "SharedViews"
+            ]
+        ),
         .target(
             name: "ImgurClient",
             dependencies: ["Secrets"]
@@ -51,10 +66,15 @@ let package = Package(
         .target(
             name: "SearchResultsFeature",
             dependencies: [
+                "ExamineImageFeature",
                 "ImgurClient",
                 "Kingfisher",
-                "Models"
+                "Models",
+                "SharedViews"
             ]
         ),
+        .target(
+            name: "SharedViews"
+        )
     ]
 )
