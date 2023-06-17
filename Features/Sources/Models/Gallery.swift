@@ -19,4 +19,11 @@ extension Gallery: Decodable {
         case title
         case media = "images"
     }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(String.self, forKey: .id)
+        self.title = try container.decode(String.self, forKey: .title)
+        self.media = try container.decodeIfPresent([Media].self, forKey: .media) ?? []
+    }
 }
