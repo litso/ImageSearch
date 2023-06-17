@@ -37,21 +37,28 @@ public class SearchResultsViewModel: ObservableObject {
     @Published var allMedia = [Media]()
     @Published var alert: AlertMessage?
     @Published var fullScreenImage: Media?
+    @Published var searchText = ""
 
     var page = 0
-    private var cancellable: AnyCancellable?
+    private var loadMediaCancellable: AnyCancellable?
     private let imgurClient: ImgurClient
 
     init(imgurClient: ImgurClient) {
         self.imgurClient = imgurClient
     }
 
-    public init() {
-        self.imgurClient = ImgurClient()
+    public convenience init() {
+        self.init(imgurClient: ImgurClient())
     }
 
     func loadMedia() {
-        cancellable = imgurClient.searchMedia(query: "cats", page: page)
+        let query = searchText
+        guard query != "" else {
+            allMedia = []
+            return
+        }
+
+        loadMediaCancellable = imgurClient.searchMedia(query: query, page: page)
             .sink(
                 receiveCompletion: { [weak self] completion in
                     switch completion {
@@ -69,8 +76,7 @@ public class SearchResultsViewModel: ObservableObject {
                     .filter {
                         !$0.animated
                     }
-                    self?.allMedia.append(contentsOf: media)
-                    self?.page += 1
+                    self?.allMedia = media
                 }
             )
     }

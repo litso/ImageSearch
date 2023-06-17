@@ -21,46 +21,47 @@ public struct SearchResultsView: View {
     }
 
     public var body: some View {
-        List {
-            ForEach(viewModel.allMedia) { media in
-                Button(action: {
-                    viewModel.fullScreenImage = media
-                }) {
-                    KFImage(media.link)
-                        .placeholder {
-                            MediaLoadingView()
-                        }
-                        .onFailure { e in
-                            // TODO: Better error handling
-                            print("Error loading image: \(media.link.absoluteString): \(e)")
-                        }
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .cornerRadius(20.0)
+        NavigationStack {
+            List {
+                ForEach(viewModel.allMedia) { media in
+                    Button(action: {
+                        viewModel.fullScreenImage = media
+                    }) {
+                        KFImage(media.link)
+                            .placeholder {
+                                MediaLoadingView()
+                            }
+                            .onFailure { e in
+                                // TODO: Better error handling
+                                print("Error loading image: \(media.link.absoluteString): \(e)")
+                            }
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .cornerRadius(20.0)
+                    }
                 }
+                .listRowInsets(
+                    .init(top: 0, leading: 0, bottom: 20, trailing: 0)
+                )
+                .listRowBackground(Color.clear)
+                .listStyle(.plain)
             }
-            .listRowInsets(
-                .init(top: 0, leading: 0, bottom: 20, trailing: 0)
-            )
-            .listRowBackground(Color.clear)
-            .listStyle(.plain)
-        }
-        .fullScreenCover(item: $viewModel.fullScreenImage) { content in
-            ExamineImageView(
-                viewModel: ExamineImageViewModel(imageURL: content.link)
-            )
-        }
-        .alert(
-            item: $viewModel.alert,
-            content: { alertMessage in
-                Alert(
-                    title: Text(alertMessage.title),
-                    message: Text(alertMessage.message)
+            .fullScreenCover(item: $viewModel.fullScreenImage) { content in
+                ExamineImageView(
+                    viewModel: ExamineImageViewModel(imageURL: content.link)
                 )
             }
-        )
-        .onAppear {
-            self.viewModel.loadMedia()
+            .alert(
+                item: $viewModel.alert,
+                content: { alertMessage in
+                    Alert(
+                        title: Text(alertMessage.title),
+                        message: Text(alertMessage.message)
+                    )
+                }
+            )
         }
+        .searchable(text: $viewModel.searchText)
+        .onSubmit(of: .search, viewModel.loadMedia)
     }
 }
