@@ -52,14 +52,10 @@ public class SearchResultsViewModel: ObservableObject {
         self.init(imgurClient: ImgurClient())
     }
 
-    func loadMedia() {
-        let query = searchText
+    func perfromImageSearch() {
+        let query = searchText == "" ? "Under Construction" : searchText
 
         guard !isSearching else {
-            return
-        }
-        guard query != "" else {
-            allMedia = []
             return
         }
 

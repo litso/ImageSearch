@@ -56,6 +56,12 @@ public struct SearchResultsView: View {
                     }
                 }
             }
+            .onAppear {
+                if viewModel.allMedia.count == 0 && viewModel.searchText == "" {
+                    // Load a search to avoid showing an empty screen initially
+                    viewModel.perfromImageSearch()
+                }
+            }
             .fullScreenCover(item: $viewModel.fullScreenImage) { content in
                 ExamineImageView(
                     viewModel: ExamineImageViewModel(imageURL: content.link)
@@ -72,6 +78,6 @@ public struct SearchResultsView: View {
             )
         }
         .searchable(text: $viewModel.searchText)
-        .onSubmit(of: .search, viewModel.loadMedia)
+        .onSubmit(of: .search, viewModel.perfromImageSearch)
     }
 }
