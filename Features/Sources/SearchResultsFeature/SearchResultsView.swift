@@ -23,28 +23,38 @@ public struct SearchResultsView: View {
     public var body: some View {
         NavigationStack {
             List {
-                ForEach(viewModel.allMedia) { media in
-                    Button(action: {
-                        viewModel.fullScreenImage = media
-                    }) {
-                        KFImage(media.link)
-                            .placeholder {
-                                MediaLoadingView()
-                            }
-                            .onFailure { e in
-                                // TODO: Better error handling
-                                print("Error loading image: \(media.link.absoluteString): \(e)")
-                            }
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .cornerRadius(20.0)
+                if !viewModel.isSearching {
+                    ForEach(viewModel.allMedia) { media in
+                        Button(action: {
+                            viewModel.fullScreenImage = media
+                        }) {
+                            KFImage(media.link)
+                                .placeholder {
+                                    MediaLoadingView()
+                                }
+                                .onFailure { e in
+                                    // TODO: Better error handling
+                                    print("Error loading image: \(media.link.absoluteString): \(e)")
+                                }
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .cornerRadius(20.0)
+                        }
+                    }
+                    .listRowInsets(
+                        .init(top: 0, leading: 0, bottom: 20, trailing: 0)
+                    )
+                    .listRowBackground(Color.clear)
+                    .listStyle(.plain)
+                } else {
+                    if viewModel.searchText.isEmpty {
+                        Text("Loading...")
+                            .italic()
+                    } else {
+                        Text("Searching \(viewModel.searchText)...")
+                            .italic()
                     }
                 }
-                .listRowInsets(
-                    .init(top: 0, leading: 0, bottom: 20, trailing: 0)
-                )
-                .listRowBackground(Color.clear)
-                .listStyle(.plain)
             }
             .fullScreenCover(item: $viewModel.fullScreenImage) { content in
                 ExamineImageView(

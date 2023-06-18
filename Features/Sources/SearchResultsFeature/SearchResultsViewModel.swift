@@ -38,6 +38,7 @@ public class SearchResultsViewModel: ObservableObject {
     @Published var alert: AlertMessage?
     @Published var fullScreenImage: Media?
     @Published var searchText = ""
+    @Published var isSearching = false
 
     var page = 0
     private var loadMediaCancellable: AnyCancellable?
@@ -53,14 +54,20 @@ public class SearchResultsViewModel: ObservableObject {
 
     func loadMedia() {
         let query = searchText
+
+        guard !isSearching else {
+            return
+        }
         guard query != "" else {
             allMedia = []
             return
         }
 
+        isSearching = true
         loadMediaCancellable = imgurClient.searchMedia(query: query, page: page)
             .sink(
                 receiveCompletion: { [weak self] completion in
+                    self?.isSearching = false
                     switch completion {
                     case .failure(let error):
                         self?.alert = .init(
