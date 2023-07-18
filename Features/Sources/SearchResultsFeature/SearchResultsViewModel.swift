@@ -43,13 +43,18 @@ public class SearchResultsViewModel: ObservableObject {
     var page = 0
     private var loadMediaCancellable: AnyCancellable?
     private let imgurClient: ImgurClient
+    let favoritesStore: FavoritesStore
 
-    init(imgurClient: ImgurClient) {
+    init(
+        imgurClient: ImgurClient,
+        favoritesStore: FavoritesStore
+    ) {
         self.imgurClient = imgurClient
+        self.favoritesStore = favoritesStore
     }
 
     public convenience init() {
-        self.init(imgurClient: ImgurClient())
+        self.init(imgurClient: ImgurClient(), favoritesStore: FavoritesStore())
     }
 
     func perfromImageSearch() {

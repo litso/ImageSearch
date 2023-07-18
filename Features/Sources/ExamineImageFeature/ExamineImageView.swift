@@ -21,13 +21,13 @@ public struct ExamineImageView: View {
         ZStack {
             Color.primary.edgesIgnoringSafeArea(.all)
 
-            KFImage(viewModel.imageURL)
+            KFImage(viewModel.media.link)
                 .placeholder {
                     MediaLoadingView()
                 }
                 .onFailure { e in
                     // TODO: Better error handling
-                    print("Error loading image: \(viewModel.imageURL): \(e)")
+                    print("Error loading image: \(viewModel.media.link): \(e)")
                 }
                 .resizable()
                 .aspectRatio(contentMode: .fit)
@@ -38,14 +38,23 @@ public struct ExamineImageView: View {
                             viewModel?.scale = min(max(scale.magnitude, 0.5), 2.0)
                         }
                 )
-                .toolbar(.visible, for: .automatic)
-                .toolbar {
-                    Button("Close", action: { })
-                }
-
             VStack() {
                 HStack {
                     Spacer()
+                    Button {
+                        viewModel.toggleFavorite()
+                    } label: {
+                        if viewModel.isFavorite {
+                            Image(systemName: "heart.circle.fill")
+                                .foregroundColor(.white)
+                                .font(.system(size: 20, weight: .bold))
+                        } else {
+                            Image(systemName: "heart.circle")
+                                .foregroundColor(.white)
+                                .font(.system(size: 20, weight: .bold))
+                        }
+                    }
+                    .padding(.trailing)
                     Button {
                         dismiss()
                     } label: {
@@ -57,6 +66,16 @@ public struct ExamineImageView: View {
                 Spacer()
             }
         }
+        .alert(
+            item: $viewModel.alert,
+            content: { alertMessage in
+                Alert(
+                    title: Text(alertMessage.title),
+                    message: Text(alertMessage.message)
+                )
+            }
+        )
+
     }
 }
 
@@ -64,7 +83,8 @@ struct ExamineImageView_Previews: PreviewProvider {
     static var previews: some View {
         ExamineImageView(
             viewModel: ExamineImageViewModel(
-                imageURL: URL(string: "https://i.imgur.com/zF8rUNX.jpg")!
+                media: .mock(),
+                favoritesStore: .mock()
             )
         )
     }

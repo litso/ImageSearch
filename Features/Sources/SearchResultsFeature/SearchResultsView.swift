@@ -8,6 +8,7 @@
 import ExamineImageFeature
 import Kingfisher
 import Models
+import FavoritesFeature
 import SharedViews
 import SwiftUI
 
@@ -23,6 +24,13 @@ public struct SearchResultsView: View {
     public var body: some View {
         NavigationStack {
             List {
+                NavigationLink {
+                    FavoritesView(viewModel: FavoritesViewModel(favoritesStore: viewModel.favoritesStore))
+                } label: {
+                    Text("Recently Viewed")
+                }
+                .padding()
+
                 if !viewModel.isSearching {
                     ForEach(viewModel.allMedia) { media in
                         Button(action: {
@@ -62,9 +70,9 @@ public struct SearchResultsView: View {
                     viewModel.perfromImageSearch()
                 }
             }
-            .fullScreenCover(item: $viewModel.fullScreenImage) { content in
+            .fullScreenCover(item: $viewModel.fullScreenImage) { media in
                 ExamineImageView(
-                    viewModel: ExamineImageViewModel(imageURL: content.link)
+                    viewModel: ExamineImageViewModel(media: media, favoritesStore: viewModel.favoritesStore)
                 )
             }
             .alert(

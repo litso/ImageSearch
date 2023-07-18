@@ -23,6 +23,10 @@ let package = Package(
             targets: ["PackageDependencies"]
         ),
         .library(
+            name: "FavoritesFeature",
+            targets: ["FavoritesFeature"]
+        ),
+        .library(
             name: "Secrets",
             targets: ["Secrets"]),
         .library(
@@ -44,6 +48,7 @@ let package = Package(
             name: "ExamineImageFeature",
             dependencies: [
                 "Kingfisher",
+                "Models",
                 "SharedViews"
             ]
         ),
@@ -62,6 +67,15 @@ let package = Package(
             name: "ModelsTests",
             dependencies: ["Models"]
         ),
+        .target(
+            name: "FavoritesFeature",
+            dependencies: [
+                "ExamineImageFeature",
+                "Kingfisher",
+                "Models",
+                "SharedViews"
+            ]
+        ),
         .target(name: "Secrets"),
         .target(
             name: "SearchResultsFeature",
@@ -70,6 +84,7 @@ let package = Package(
                 "ImgurClient",
                 "Kingfisher",
                 "Models",
+                "FavoritesFeature",
                 "SharedViews"
             ]
         ),
